@@ -1,1 +1,156 @@
-Hello World
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Contraseñas</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 20px;
+      margin: 50px auto;
+      width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    .password-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 75%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1em;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 1em;
+    }
+
+    #length {
+      width: 100%;
+    }
+
+    .checkboxes {
+      text-align: left;
+      margin: 20px 0;
+    }
+
+    .checkboxes label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Generador de Contraseñas</h1>
+      <div class="password-box">
+        <input type="text" v-model="password" readonly>
+        <button @click="copyToClipboard">Copiar</button>
+      </div>
+      <label for="length">Longitud: <span>{{ length }}</span></label>
+      <input type="range" id="length" v-model="length" min="8" max="30">
+
+      <div class="checkboxes">
+        <label><input type="checkbox" v-model="options.lowercase"> Minúsculas</label>
+        <label><input type="checkbox" v-model="options.uppercase"> Mayúsculas</label>
+        <label><input type="checkbox" v-model="options.numbers"> Dígitos</label>
+        <label><input type="checkbox" v-model="options.symbols"> Símbolos</label>
+      </div>
+      <button @click="generatePassword">Generar Contraseña</button>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          length: 25,
+          password: '',
+          options: {
+            lowercase: true,
+            uppercase: true,
+            numbers: true,
+            symbols: true
+          }
+        };
+      },
+      methods: {
+        generatePassword() {
+          const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+          const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          const numberChars = '0123456789';
+          const symbolChars = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+          let charPool = '';
+          if (this.options.lowercase) charPool += lowercaseChars;
+          if (this.options.uppercase) charPool += uppercaseChars;
+          if (this.options.numbers) charPool += numberChars;
+          if (this.options.symbols) charPool += symbolChars;
+
+          if (charPool === '') {
+            this.password = 'Seleccione al menos una opción';
+            return;
+          }
+
+          this.password = Array.from({ length: this.length }, () => 
+            charPool[Math.floor(Math.random() * charPool.length)]
+          ).join('');
+        },
+        copyToClipboard() {
+          if (this.password) {
+            navigator.clipboard.writeText(this.password).then(() => {
+              alert('Contraseña copiada al portapapeles');
+            });
+          }
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
