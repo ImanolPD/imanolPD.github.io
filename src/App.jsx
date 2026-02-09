@@ -267,43 +267,6 @@ export default function App() {
           </p>
         </div>
         
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-          {[
-            {
-              titulo: "Alertas que solo tú ves",
-              descripcion: "Cuando Pulseby detecta algo en tu bebé, tu Charmy vibra suavemente o se ilumina. Sin alarmas, sin miradas. Solo tú y tu instinto conectados.",
-              icono: "👀",
-              color: "from-amber-100 to-yellow-50"
-            },
-            {
-              titulo: "Diseño que habla de ti",
-              descripcion: "Pulsera italiana con charms intercambiables. La pieza especial que conecta con tu bebé se integra perfectamente. Porque cuidar bien también es cuestión de estilo.",
-              icono: "🇮🇹",
-              color: "from-blue-100 to-cyan-50"
-            },
-            {
-              titulo: "Tecnología invisible",
-              descripcion: "Acero quirúrgico, cuero italiano y conexión Bluetooth de última generación. Todo el poder de Pulseby, disfrazado de elegancia.",
-              icono: "🔋",
-              color: "from-amber-100 to-orange-50"
-            }
-          ].map((caracteristica, indice) => (
-            <motion.div 
-              key={indice}
-              variants={aparecerArriba}
-              whileHover={{ y: -10 }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br opacity-10"></div>
-              <div className="relative z-10">
-                <div className="text-5xl mb-6">{caracteristica.icono}</div>
-                <h3 className="text-2xl font-bold mb-3">{caracteristica.titulo}</h3>
-                <p className="text-gray-700">{caracteristica.descripcion}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        
         <div className="max-w-4xl mx-auto mt-8 bg-white rounded-2xl p-8 border border-amber-100 shadow-lg">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/3 mb-6 md:mb-0">
